@@ -223,7 +223,7 @@ def FindClang():
     return res
 
 def DefaultIncludes(filename, flags):
-    f = open('/dev/null', 'rw')
+    f = open('/dev/null', 'w+')
     clangExec = FindClang()
     proc = subprocess.Popen(
         [clangExec, "-v", "-E"] + SourceLang(filename, False) + ["-"],
@@ -236,7 +236,7 @@ def DefaultIncludes(filename, flags):
         if not line:
             break
         #line = line.decode("utf-8")
-        if line.startswith("#include"):
+        if line.startswith(b'#include'):
             is_include_path = True
         elif is_include_path and line.startswith(' '):
             flags.append("-isystem")

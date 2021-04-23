@@ -146,12 +146,24 @@ augroup LaTeX
     autocmd FileType tex call LatexOptions()
 augroup END
 
+" Further spell checking and textwidth setting
+autocmd FileType md setlocal spell spelllang=en_us
+autocmd FileType txt setlocal spell spelllang=en_us
+autocmd FileType js setlocal spell spelllang=en_us
+autocmd FileType java setlocal spell spelllang=en_us
+autocmd FileType ts setlocal spell spelllang=en_us
+autocmd FileType md setlocal textwidth=80
+
 " Add header to new files
 autocmd BufNewFile *.cpp so ~/.home/header.txt
+autocmd BufNewFile *.cc so ~/.home/header.txt
 autocmd BufNewFile *.c so ~/.home/header.txt
 autocmd BufNewFile *.h so ~/.home/header.txt
 autocmd BufNewFile *.hpp so ~/.home/header.txt
 autocmd BufNewFile *.java so ~/.home/header.txt
+
+" color highlight for typscript files
+autocmd BufNewFile,BufRead *.ts set syntax=javascript
 
 " Automatically close brackets
 " inoremap ( ()<left>
@@ -262,8 +274,10 @@ nnoremap <leader>F :YcmCompleter FixIt<CR>
 augroup CloseAutocompletePreview
     autocmd InsertLeave *.hpp,*.py :pclose
     autocmd InsertLeave *.h,*.py :pclose
+    autocmd InsertLeave *.cc,*.py :pclose
     autocmd InsertLeave *.cpp,*.py :pclose
 augroup END
+let g:ycm_server_python_interpreter = '/usr/bin/python3'
 let g:ycm_extra_conf_vim_data = ['getcwd()']
 let g:ycm_global_ycm_extra_conf = '~/.vim/ycm_extra_conf.py'
 let g:ycm_semantic_triggers = {'haskell' : ['.']}
@@ -289,3 +303,9 @@ augroup cppmake
     autocmd!
     autocmd FileType cpp execute s:createNinjaCmd()
 augroup END
+
+:nnoremap <leader>x :e<Space>
+
+" spell check
+:nnoremap <leader>sp :setlocal spell spelllang=
+
